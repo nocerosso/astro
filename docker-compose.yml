@@ -3,10 +3,22 @@ services:
     image: bitnami/apache:latest
     ports:
       - 8081
+#     volumes:
+# # quella che sta in /app risponde a qualsiasi dominio
+#       - ./astro/app:/app
+#       - ./astro/envysartorialist_it:/envysartorialist_it
+#       - ./astro/envyscuola_it:/envyscuola
+#       - ./astro/log:/log
+#       - ./astro/vhost:/vhost
+#     environment:
+#       - APACHE_HTDOCS_DIR=/app
+#       - APACHE_LOGS_DIR=/log
+#       - APACHE_VHOSTS_DIR=/vhost
     networks:
       - dokploy-network
     labels:
       - "traefik.enable=true"
+      
 # envysartorialist.it
       - "traefik.http.routers.envy.entrypoints=websecure"
       - "traefik.http.routers.envy.tls.certResolver=letsencrypt"
@@ -32,7 +44,8 @@ services:
       - "traefik.http.middlewares.scuola-to-non-www.redirectregex.replacement=https://$${1}"
       - "traefik.http.middlewares.scuola-to-non-www.redirectregex.permanent=true"
       - "traefik.http.routers.scuola-www.middlewares=www-to-non-www"
-      - "traefik.http.routers.scuola-www.tls.certResolver=letsencrypt
+      - "traefik.http.routers.scuola-www.tls.certResolver=letsencrypt"
+
       
 networks:
   dokploy-network:
