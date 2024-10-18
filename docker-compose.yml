@@ -3,15 +3,6 @@ services:
     image: bitnami/apache:latest
     ports:
       - 8081
- #    volumes:
- #      - ./astro/app:/app
- #      - ./astro/log:/log
- #      - ./astro/vhost:/vhost
-     environment:
-       - APACHE_DEFAULT_HTTP_PORT_NUMBER="8081"
-#       - APACHE_HTDOCS_DIR=/app
-#       - APACHE_LOGS_DIR=/log
-#       - APACHE_VHOSTS_DIR=/vhost
     networks:
       - dokploy-network
     labels:
