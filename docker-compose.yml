@@ -3,9 +3,9 @@ services:
     image: bitnami/apache:latest
     ports:
       - 8081
-#     volumes:
-# # quella che sta in /app risponde a qualsiasi dominio
-#       - ./astro/app:/app
+     volumes:
+# quella che sta in /app risponde a qualsiasi dominio
+       - ./app:/app
 #       - ./astro/envysartorialist_it:/envysartorialist_it
 #       - ./astro/envyscuola_it:/envyscuola
 #       - ./astro/log:/log
