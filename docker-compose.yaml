@@ -5,11 +5,11 @@ services:
       - 8081
     volumes:
 # quella che sta in /app risponde a qualsiasi dominio
-      - ./asto/app:/app
-      - ./asto/envysartorialist_it:/envysartorialist_it
-      - ./asto/envyscuola_it:/envyscuola
-      - ./asto/log:/log
-      - ./asto/vhost:/vhost
+      - ./astro/app:/app
+      - ./astro/envysartorialist_it:/envysartorialist_it
+      - ./astro/envyscuola_it:/envyscuola
+      - ./astro/log:/log
+      - ./astro/vhost:/vhost
     environment:
       - APACHE_HTDOCS_DIR=/app
       - APACHE_LOGS_DIR=/log
