@@ -6,8 +6,6 @@ services:
     volumes:
 # quella che sta in /app risponde a qualsiasi dominio
       - ./astro/app:/app
-      - ./astro/envysartorialist_it:/envysartorialist_it
-      - ./astro/envyscuola_it:/envyscuola
       - ./astro/log:/log
       - ./astro/vhost:/vhost
     environment:
