@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Funziona</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            color: green;
+        }
+        .host-info {
+            color: blue;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Il server funziona correttamente!</h1>
+    <h2>envysartorialist.it</h2>  
+    <p>Stai visitando questo sito su: <span class="host-info" id="host-name"></span></p>
+
+    <script>
+        // Ottiene il nome dell'host dalla URL
+        const hostName = window.location.hostname;
+        document.getElementById("host-name").textContent = hostName;
+    </script>
+</body>
+</html>

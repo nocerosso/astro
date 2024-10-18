@@ -1,0 +1,52 @@
+services:
+  apache:
+    image: bitnami/apache:latest
+    ports:
+      - 8081
+    volumes:
+# quella che sta in /app risponde a qualsiasi dominio
+      - ./asto/app:/app
+      - ./asto/envysartorialist_it:/envysartorialist_it
+      - ./asto/envyscuola_it:/envyscuola
+      - ./asto/log:/log
+      - ./asto/vhost:/vhost
+    environment:
+      - APACHE_HTDOCS_DIR=/app
+      - APACHE_LOGS_DIR=/log
+      - APACHE_VHOSTS_DIR=/vhost
+    networks:
+      - dokploy-network
+    labels:
+      - "traefik.enable=true"
+      
+# envysartorialist.it
+      - "traefik.http.routers.envy.entrypoints=websecure"
+      - "traefik.http.routers.envy.tls.certResolver=letsencrypt"
+      - "traefik.http.routers.envy.rule=Host(`envysartorialist.it`)"
+      - "traefik.http.services.envy.loadbalancer.server.port=8081"
+# Router per www.envysartorialist.it con redirect 301 a envysartorialist.it
+      - "traefik.http.routers.envy-www.entrypoints=websecure"
+      - "traefik.http.routers.envy-www.rule=Host(`www.envysartorialist.it`)"
+      - "traefik.http.middlewares.www-to-non-www.redirectregex.regex=^https://www\\.(.*)"
+      - "traefik.http.middlewares.www-to-non-www.redirectregex.replacement=https://$${1}"
+      - "traefik.http.middlewares.www-to-non-www.redirectregex.permanent=true"
+      - "traefik.http.routers.envy-www.middlewares=www-to-non-www"
+      - "traefik.http.routers.envy-www.tls.certResolver=letsencrypt"  
+# envyscuola.it
+      - "traefik.http.routers.scuola.entrypoints=websecure"
+      - "traefik.http.routers.scuola.tls.certResolver=letsencrypt"
+      - "traefik.http.routers.scuola.rule=Host(`envyscuola.it`)"
+      - "traefik.http.services.scuola.loadbalancer.server.port=8081"
+# Router per www.envyscuola.it con redirect 301 a envysartorialist.it
+      - "traefik.http.routers.scuola-www.entrypoints=websecure"
+      - "traefik.http.routers.scuola-www.rule=Host(`www.envysartorialist.it`)"
+      - "traefik.http.middlewares.scuola-to-non-www.redirectregex.regex=^https://www\\.(.*)"
+      - "traefik.http.middlewares.scuola-to-non-www.redirectregex.replacement=https://$${1}"
+      - "traefik.http.middlewares.scuola-to-non-www.redirectregex.permanent=true"
+      - "traefik.http.routers.scuola-www.middlewares=www-to-non-www"
+      - "traefik.http.routers.scuola-www.tls.certResolver=letsencrypt"
+
+      
+networks:
+  dokploy-network:
+    external: true
